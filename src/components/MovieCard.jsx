@@ -4,9 +4,10 @@ import {
   faStar,
   faCircleCheck,
   faCommentDots,
+  faHeart,
 } from "@fortawesome/free-solid-svg-icons";
 
-export default function MovieCard({movieObj}){
+export default function MovieCard({movieObj , onDeleteMovie, onToggleMovie,onAddtoWatchList,showActions,onRemoveFromWatchList}){
     let commentText = "";
     if(movieObj.rating >= 9.5)
         commentText = "Favori adayım!";
@@ -25,8 +26,20 @@ export default function MovieCard({movieObj}){
 
             <div className="movie-card-right">
                 <div className="movie-card-top">
-                    <h2>{movieObj.title}</h2>
-                    <span className="type-badge">{movieObj.type}</span>
+                    <div className="movie-card-top-left">
+                        <h2>{movieObj.title}</h2>
+                    </div>
+                    <div className="movie-card-top-right">
+                        <span className="type-badge">{movieObj.type}</span>
+
+                        {showActions && <button className="delete-btn" onClick={() => onDeleteMovie(movieObj.id)}>Sil</button>}
+
+                        {showActions && <button className="watchlist-add-btn" onClick={() => onAddtoWatchList(movieObj)}>
+                            <FontAwesomeIcon icon={faHeart}/>
+                        </button>}
+
+                        {!showActions && <button className="watchlist-remove-btn" onClick={() => onRemoveFromWatchList(movieObj.id)}>Çıkar</button>}
+                    </div>                  
                 </div>
 
                 <div className="movie-card-details">
@@ -54,6 +67,7 @@ export default function MovieCard({movieObj}){
                             <span>Durum</span>
                         </div>
                         <span
+                            onClick={() => onToggleMovie(movieObj.id)}
                             className={
                             movieObj.isWatched
                                 ? "status-badge watched"

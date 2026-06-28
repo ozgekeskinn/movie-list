@@ -1,8 +1,6 @@
-# Mini Film / Dizi Listem
+# Film / Dizi Listem
 
-Mini Film / Dizi Listem, React ile geliştirilmiş basit ve görsel olarak düzenli bir film/dizi listeleme uygulamasıdır. Projede kullanıcıya hazır bir film ve dizi listesi gösterilir. Her yapım kart şeklinde ekrana basılır ve kart üzerinde yapımın adı, türü, puanı, izlenme durumu, kategori bilgisi ve puana göre oluşturulan kısa yorum yer alır.
-
-Bu proje, React component mantığını, props kullanımını, listeleme işlemlerini, koşullu render yapısını ve temel stil düzenlemelerini öğrenmek amacıyla hazırlanmıştır.
+**Film / Dizi Listem**, React ile geliştirilmiş, kullanıcıların film ve dizi listesini görüntüleyebildiği, yeni içerik ekleyebildiği, içerikleri silebildiği, izlenme durumunu değiştirebildiği, filtreleme yapabildiği ve favori/watchlist listesi oluşturabildiği küçük ölçekli bir web uygulamasıdır.
 
 ---
 
@@ -14,60 +12,66 @@ Bu proje, React component mantığını, props kullanımını, listeleme işleml
 - [Proje Özellikleri](#proje-özellikleri)
 - [Proje Klasör Yapısı](#proje-klasör-yapısı)
 - [Component Yapısı](#component-yapısı)
+- [State Yönetimi](#state-yönetimi)
 - [Veri Yapısı](#veri-yapısı)
+- [Film Ekleme Mantığı](#film-ekleme-mantığı)
+- [Film Silme Mantığı](#film-silme-mantığı)
+- [İzlenme Durumu Güncelleme](#izlenme-durumu-güncelleme)
+- [Filtreleme Mantığı](#filtreleme-mantığı)
+- [Watchlist / Favoriler Mantığı](#watchlist--favoriler-mantığı)
 - [Koşullu Render Kullanımı](#koşullu-render-kullanımı)
 - [FontAwesome Kullanımı](#fontawesome-kullanımı)
 - [CSS ve Tasarım Mantığı](#css-ve-tasarım-mantığı)
 - [Proje Nasıl Çalıştırılır?](#proje-nasıl-çalıştırılır)
 - [Geliştirilebilir Özellikler](#geliştirilebilir-özellikler)
+- [Genel Sonuç](#genel-sonuç)
 
 ---
 
 ## Proje Hakkında
 
-Bu proje, film ve dizileri kart yapısı ile listeleyen küçük ölçekli bir React uygulamasıdır. Uygulamada her film/dizi bilgisi bir JavaScript object yapısı olarak tutulur. Bu object'ler bir array içinde saklanır ve `map()` metodu ile ekrana dinamik olarak yazdırılır. Projede her yapım için şu bilgiler gösterilir:
+Bu uygulama, film ve dizileri kart yapısı ile listeleyen bir React projesidir. Projede başlangıçta hazır bir film/dizi verisi bulunmaktadır. Bu veriler `data.js` dosyasında tutulur ve uygulamanın ilk açılışında ekrana kartlar halinde yazdırılır.
 
-- Yapım adı
-- Film veya dizi bilgisi
-- Tür/kategori bilgisi
-- Puan bilgisi
-- İzlenme durumu
-- Puana göre kısa yorum
-- Afiş görseli
+Uygulama yalnızca statik listeleme yapmaz. Kullanıcı arayüz üzerinden yeni film ekleyebilir, listedeki bir filmi silebilir, filmin izlenme durumunu değiştirebilir, yalnızca izlenenleri veya izlenmeyenleri filtreleyebilir ve istediği filmi favoriler/watchlist alanına ekleyebilir.
 
-Uygulama koyu tema üzerine tasarlanmıştır. Film/dizi kartları, modern bir arayüz görünümü oluşturacak şekilde grid yapısı, rounded card tasarımı, FontAwesome ikonları ve koşullu etiketlerle desteklenmiştir.
+Bu nedenle proje, React'te state değiştiğinde arayüzün otomatik olarak güncellenmesini gözlemlemek için oldukça uygun bir örnektir.
 
 ---
 
 ## Projenin Amacı
 
-Bu projenin temel amacı React'te component tabanlı yapı kurmayı öğrenmektir. Proje küçük görünse de React'in temel konularını pratik etmek için oldukça uygundur. Proje kapsamında amaçlanan başlıca kazanımlar şunlardır:
+Bu projenin temel amacı, React'te component tabanlı uygulama geliştirme mantığını öğrenmek ve özellikle state yönetimini pratik etmektir. Proje kapsamında öğrenilen başlıca konular şunlardır:
 
-- React projesi oluşturmak
-- Component yapısını anlamak
-- Componentleri birbirine bağlamak
-- Props ile veri aktarmak
-- Array içindeki verileri `map()` ile listelemek
-- Koşullu render kullanmak
-- Dinamik className kullanımı yapmak
-- Görselleri React projesine dahil etmek
-- CSS ile kart ve navbar tasarımı oluşturmak
-- FontAwesome ikonlarını React içinde kullanmak
+- React projesi oluşturma
+- Vite ile hızlı geliştirme ortamı kurma
+- Component mantığını anlama
+- Componentler arasında props ile veri gönderme
+- `useState` hook'unu kullanma
+- Form inputlarını state ile kontrol etme
+- Kullanıcıdan alınan veriyi listeye ekleme
+- Array üzerinde `map()`, `filter()` ve spread operator kullanma
+- Film silme işlemi yapma
+- İzlenme durumunu değiştirme
+- Listeyi filtreleme
+- Favori/watchlist listesi oluşturma
+- Koşullu render kullanma
+- Dinamik className kullanımı
+- FontAwesome ikonlarını React içinde kullanma
+- CSS ile modern kart tasarımı oluşturma
 
 ---
 
 ## Kullanılan Teknolojiler
 
-Bu projede kullanılan temel teknolojiler şunlardır:
-
 | Teknoloji | Açıklama |
 | --- | --- |
-| React | Component tabanlı kullanıcı arayüzü geliştirmek için kullanıldı. |
-| Vite | React projesini hızlı oluşturmak ve çalıştırmak için kullanıldı. |
-| JavaScript | Proje mantığı, array yapısı ve koşullu işlemler için kullanıldı. |
-| CSS | Sayfa tasarımı, grid yapısı ve kart stilleri için kullanıldı. |
-| Bootstrap | Temel hizalama ve yardımcı class yapıları için kullanıldı. |
-| FontAwesome | Navbar ve kart detaylarında ikon göstermek için kullanıldı. |
+| React | Kullanıcı arayüzünü component tabanlı oluşturmak için kullanıldı. |
+| Vite | React projesini hızlı oluşturmak ve geliştirme sunucusunda çalıştırmak için kullanıldı. |
+| JavaScript | Uygulama mantığı, state işlemleri, array metotları ve event yönetimi için kullanıldı. |
+| CSS | Sayfa düzeni, kart tasarımı, navbar, form ve buton stilleri için kullanıldı. |
+| Bootstrap | Header alanında hizalama ve yardımcı class yapıları için kullanıldı. |
+| FontAwesome | Navbar, kart detayları ve favori butonu için ikon kullanımında tercih edildi. |
+| npm | Proje bağımlılıklarını yönetmek için kullanıldı. |
 
 ---
 
@@ -75,15 +79,25 @@ Bu projede kullanılan temel teknolojiler şunlardır:
 
 Projede bulunan temel özellikler şunlardır:
 
-- Film ve dizi listesi gösterme
-- Her film/diziyi ayrı kart componenti olarak oluşturma
-- Film ve dizi ayrımını etiket olarak gösterme
-- İzlenme durumunu `İzledim` / `İzlemedim` şeklinde gösterme
-- İzlenme durumuna göre farklı badge tasarımı kullanma
-- Puana göre otomatik yorum oluşturma
-- Liste boşsa kullanıcıya mesaj gösterme
-- Afiş görsellerini `assets` klasöründen çekme
-- FontAwesome ikonları ile kart detaylarını daha okunabilir hale getirme
+- Film ve dizi listesini kart yapısında gösterme
+- Başlangıç verilerini `data.js` dosyasından alma
+- Her film/diziyi ayrı `MovieCard` componenti olarak oluşturma
+- Yeni film ekleme
+- Film adı ve kategori bilgisini inputlardan alma
+- Eklenen filmi mevcut listenin sonuna ekleme
+- Film silme
+- Tüm listeyi temizleme
+- İzlenme durumunu değiştirme
+- `İzledim` ve `İzlemedim` durumlarını görsel badge olarak gösterme
+- Tüm filmleri listeleme
+- Sadece izlenenleri filtreleme
+- Sadece izlenmeyenleri filtreleme
+- Favori/watchlist alanına film ekleme
+- Favori/watchlist listesinden film çıkarma
+- Header üzerinde favori sayısını gösterme
+- Favori ikonuna tıklayınca watchlist alanını açıp kapatma
+- Puana göre otomatik yorum üretme
+- Liste boşsa kullanıcıya bilgilendirme mesajı gösterme
 - Koyu tema üzerine modern kart tasarımı oluşturma
 
 ---
@@ -95,6 +109,9 @@ Projenin temel klasör yapısı şu şekildedir:
 ```text
 movie-list/
 ├── public/
+│   ├── favicon.svg
+│   └── icons.svg
+│
 ├── src/
 │   ├── assets/
 │   │   ├── interstellar.jpg
@@ -111,17 +128,24 @@ movie-list/
 │   │   └── friends.jpg
 │   │
 │   ├── components/
+│   │   ├── AddMovieForm.jsx
+│   │   ├── FilterButtons.jsx
 │   │   ├── Header.jsx
+│   │   ├── MovieCard.jsx
 │   │   ├── MovieList.jsx
-│   │   └── MovieCard.jsx
+│   │   └── WatchList.jsx
 │   │
 │   ├── App.jsx
 │   ├── App.css
+│   ├── data.js
 │   ├── index.css
 │   └── main.jsx
 │
 ├── index.html
 ├── package.json
+├── package-lock.json
+├── vite.config.js
+├── eslint.config.js
 └── README.md
 ```
 
@@ -129,65 +153,198 @@ movie-list/
 
 ## Component Yapısı
 
-Projede üç temel component bulunmaktadır:
+Projede component yapısı genel olarak aşağıdaki gibidir:
 
 ```text
 App
 ├── Header
+├── AddMovieForm
+├── FilterButtons
+├── WatchList
 └── MovieList
     └── MovieCard
 ```
 
+Bu yapı sayesinde proje daha okunabilir, yönetilebilir ve geliştirilebilir hale getirilmiştir. Her componentin farklı bir görevi vardır.
+
+---
+
 ### App Component
 
-`App.jsx`, uygulamanın ana componentidir. Sayfada hangi componentlerin gösterileceğini belirler. Bu projede `App` componentinin görevi:
+`App.jsx`, uygulamanın ana componentidir. Projedeki ana state'ler burada tutulur ve diğer componentlere props aracılığıyla gönderilir. `App` componentinin başlıca görevleri şunlardır:
 
-- `Header` componentini göstermek
-- `MovieList` componentini göstermek
-- Sayfanın genel component akışını oluşturmak
+- Film listesini state olarak tutmak
+- Aktif filtre bilgisini state olarak tutmak
+- Watchlist/favori listesini state olarak tutmak
+- Watchlist alanının açık veya kapalı olmasını yönetmek
+- Film ekleme fonksiyonunu tanımlamak
+- Film silme fonksiyonunu tanımlamak
+- İzlenme durumunu değiştiren fonksiyonu tanımlamak
+- Tüm filmleri temizleyen fonksiyonu tanımlamak
+- Watchlist'e film ekleyen fonksiyonu tanımlamak
+- Watchlist'ten film çıkaran fonksiyonu tanımlamak
+- Alt componentlere gerekli verileri ve fonksiyonları props ile göndermek
+
+Bu projede state yönetiminin merkezi `App.jsx` dosyasıdır.
 
 ---
 
 ### Header Component
 
-`Header.jsx`, sayfanın üst kısmındaki navbar alanını oluşturur. Header içinde şu alanlar bulunur:
+`Header.jsx`, sayfanın üst kısmındaki navbar alanını oluşturur. Header componenti `children` props'u alır. Böylece header içine yerleştirilecek içerik `App.jsx` tarafında belirlenir. Header alanında şu yapılar bulunur:
 
 - Sol tarafta uygulama adı ve film ikonu
-- Ortada `Filmler` ve `Diziler` sekmeleri
-- Sağ tarafta kullanıcı ikonu
+- Orta alanda `Filmler` ve `Diziler` menü yazıları
+- Sağ tarafta favori ikonu ve kullanıcı ikonu
+- Favori ikonunun yanında watchlist'e eklenen film sayısı
 
 Bu component, sayfanın genel kimliğini ve üst menü görünümünü oluşturur.
 
 ---
 
+### AddMovieForm Component
+
+`AddMovieForm.jsx`, kullanıcıdan yeni film bilgisi almak için oluşturulmuştur. Bu component içinde iki ayrı input bulunmaktadır:
+
+- Film adı
+- Film kategorisi
+
+Bu componentte `title` ve `category` değerleri ayrı state'lerde tutulur. Kullanıcı inputlara yazı yazdıkça state güncellenir. Form gönderildiğinde yeni bir film object'i oluşturulur ve `onAddMovie` fonksiyonu ile `App` componentine gönderilir. Yeni eklenen filmin varsayılan değerleri şu şekildedir:
+
+```js
+{
+  id: Date.now(),
+  title,
+  category,
+  rating: 0,
+  isWatched: false,
+  image: ""
+}
+```
+
+Burada `Date.now()` değeri yeni film için benzersiz bir `id` oluşturmak amacıyla kullanılmıştır.
+
+---
+
+### FilterButtons Component
+
+`FilterButtons.jsx`, liste üzerinde filtreleme yapmak için kullanılan butonları içerir. Bu componentte bulunan butonlar şunlardır:
+
+- `Tümü`
+- `İzledim`
+- `İzlemedim`
+- `Tümünü Sil`
+
+`filterButton` state'i hangi butonun aktif olduğunu belirler. Aktif butona göre farklı CSS class'ı uygulanır. Bu sayede kullanıcı hangi filtrenin seçili olduğunu görsel olarak anlayabilir.
+
+---
+
 ### MovieList Component
 
-`MovieList.jsx`, film ve dizi verilerinin tutulduğu componenttir. Bu component içinde bir `movies` array'i bulunur. Bu array içindeki her eleman bir film veya dizi object'idir. `map()` metodu ile array dönülür ve her eleman için bir `MovieCard` componenti oluşturulur. MovieList componentinin görevleri:
+`MovieList.jsx`, film listesini ekrana yazdıran componenttir. Bu component, `movies` verisini props olarak alır ve aktif filtre değerine göre listeyi düzenler. 
 
-- Film/dizi verilerini tutmak
-- Liste boşsa mesaj göstermek
-- Liste doluysa her veri için `MovieCard` oluşturmak
-- Film verisini props ile `MovieCard` componentine göndermek
+Daha sonra `filteredMovies` dizisi `map()` metodu ile dönülür ve her film için bir `MovieCard` componenti oluşturulur.
 
 ---
 
 ### MovieCard Component
 
-`MovieCard.jsx`, tek bir film veya dizi kartını temsil eder. Bu component, `MovieList` componentinden gelen `movieObj` props'unu kullanır. Kart üzerinde yapımın adı, görseli, türü, puanı, izlenme durumu ve yorum bilgisi gösterilir. MovieCard componentinin görevleri:
+`MovieCard.jsx`, tek bir film veya dizi kartını temsil eder. Kart üzerinde film/diziye ait bilgiler gösterilir. MovieCard içinde gösterilen bilgiler şunlardır:
 
-- Afiş görselini göstermek
-- Film/dizi adını göstermek
-- Film veya dizi etiketini göstermek
-- Tür bilgisini göstermek
-- Puan bilgisini göstermek
-- İzlenme durumunu koşullu olarak göstermek
-- Puana göre yorum üretmek
+- Afiş görseli
+- Film/dizi adı
+- Film/dizi türü
+- Kategori bilgisi
+- Puan bilgisi
+- İzlenme durumu
+- Puana göre oluşturulan yorum
+- Sil butonu
+- Watchlist'e ekleme butonu
+- Watchlist içinde görüntüleniyorsa çıkar butonu
+
+Bu component hem ana liste içinde hem de watchlist alanında tekrar kullanılmaktadır. Bu, React'te component tekrar kullanılabilirliğine güzel bir örnektir.
+
+---
+
+### WatchList Component
+
+`WatchList.jsx`, favorilere eklenen filmleri ayrı bir bölümde gösterir. Kullanıcı ana listedeki kalp ikonuna tıkladığında ilgili film watchlist listesine eklenir. WatchList componentinin görevleri şunlardır:
+
+- Favorilere eklenen filmleri göstermek
+- Her favori film için `MovieCard` componentini kullanmak
+- Favorilerdeki film için `Çıkar` butonu göstermek
+- Kullanıcı film çıkardığında ilgili filmi watchlist listesinden silmek
+
+Watchlist alanı, headerdaki kalp ikonuna tıklanarak açılıp kapatılır.
+
+---
+
+## State Yönetimi
+
+Bu projede state yönetimi React'in `useState` hook'u ile yapılmıştır. State, uygulama içinde değişebilen verileri tutar. Bir state değiştiğinde React ilgili componentleri yeniden render eder ve arayüz otomatik olarak güncellenir. Projede kullanılan ana state'ler şunlardır:
+
+```js
+const [movies, setMovies] = useState(movieData);
+const [filterButton, setFilterButton] = useState("all");
+const [watchListMovies, setWatchListMovies] = useState([]);
+const [isWatchListOpen, setIsWatchListOpen] = useState(false);
+```
+
+Bu state'lerin görevleri aşağıdaki gibidir:
+
+| State | Görevi |
+| --- | --- |
+| `movies` | Ana film/dizi listesini tutar. |
+| `filterButton` | Aktif filtre değerini tutar. |
+| `watchListMovies` | Favorilere/watchlist'e eklenen filmleri tutar. |
+| `isWatchListOpen` | Watchlist bölümünün açık mı kapalı mı olduğunu tutar. |
+
+---
+
+### movies State'i
+
+`movies` state'i uygulamadaki ana film listesidir. Başlangıç değeri olarak `data.js` dosyasından gelen `movieData` kullanılır. Bu state üzerinde şu işlemler yapılır:
+
+- Yeni film ekleme
+- Film silme
+- İzlenme durumunu değiştirme
+- Tüm listeyi temizleme
+- Filtreleme için veri kaynağı olarak kullanma
+
+---
+
+### filterButton State'i
+
+`filterButton`, hangi filtre butonunun aktif olduğunu tutar. Alabileceği değerler şunlardır:
+
+| Değer | Anlamı |
+| --- | --- |
+| `all` | Tüm filmler gösterilir. |
+| `watched` | Sadece izlenen filmler gösterilir. |
+| `unwatched` | Sadece izlenmeyen filmler gösterilir. |
+
+---
+
+### watchListMovies State'i
+
+`watchListMovies`, kullanıcının favorilere eklediği filmleri tutar. Başlangıçta boş bir array'dir. Kullanıcı bir filmi favorilere eklediğinde bu array güncellenir.
+
+---
+
+### isWatchListOpen State'i
+
+`isWatchListOpen`, watchlist bölümünün görünür olup olmadığını kontrol eder.
+
+- `false` ise watchlist görünmez.
+- `true` ise watchlist ekranda görünür.
+
+Headerdaki kalp ikonuna tıklanınca bu değer tersine çevrilir.
 
 ---
 
 ## Veri Yapısı
 
-Projede film ve dizi bilgileri `movies` adlı bir array içinde tutulur. Her bir yapım, object yapısı ile temsil edilir. Örnek veri yapısı:
+Projede hazır film ve dizi verileri `src/data.js` dosyasında tutulur. Her film/dizi bir object olarak tanımlanmıştır. Örnek veri yapısı:
 
 ```js
 {
@@ -201,94 +358,288 @@ Projede film ve dizi bilgileri `movies` adlı bir array içinde tutulur. Her bir
 }
 ```
 
-Bu object içinde bulunan alanlar şu anlama gelir:
+Bu object içindeki alanların anlamları şunlardır:
 
 | Alan | Açıklama |
 | --- | --- |
 | `id` | Her film/dizi için benzersiz kimlik değeridir. |
 | `title` | Film veya dizinin adıdır. |
-| `type` | Yapımın film mi dizi mi olduğunu belirtir. |
-| `category` | Yapımın tür/kategori bilgisidir. |
-| `rating` | Yapımın puan değeridir. |
-| `isWatched` | Yapımın izlenip izlenmediğini belirtir. |
+| `type` | İçeriğin film mi dizi mi olduğunu belirtir. |
+| `category` | Tür/kategori bilgisidir. |
+| `rating` | Puan değeridir. |
+| `isWatched` | İzlenme durumunu belirtir. |
 | `image` | Afiş görselini temsil eder. |
+
+---
+
+## Film Ekleme Mantığı
+
+Film ekleme işlemi `AddMovieForm` componenti üzerinden yapılır. Kullanıcı film adı ve kategori bilgisini girer. Form gönderildiğinde `handleSubmit` fonksiyonu çalışır. Film ekleme sürecinin adımları şunlardır:
+
+1. Kullanıcı inputlara film adı ve kategori yazar.
+2. Input değerleri `title` ve `category` state'lerinde tutulur.
+3. Form submit edildiğinde sayfanın yenilenmesi `e.preventDefault()` ile engellenir.
+4. Yeni bir film object'i oluşturulur.
+5. Oluşturulan object `onAddMovie` fonksiyonu ile `App` componentine gönderilir.
+6. `App.jsx` içindeki `handleAddMovie` fonksiyonu çalışır.
+7. Yeni film mevcut `movies` array'inin sonuna eklenir.
+8. Input alanları temizlenir.
+
+Film ekleyen fonksiyon şu şekildedir:
+
+```js
+function handleAddMovie(movie) {
+  setMovies((movies) => [...movies, movie]);
+  setFilterButton("all");
+}
+```
+
+Burada spread operator kullanılarak eski liste korunur ve yeni film listenin sonuna eklenir.
+
+---
+
+## Film Silme Mantığı
+
+Film silme işlemi `MovieCard` componentindeki `Sil` butonu ile yapılır. Sil butonuna tıklandığında ilgili filmin `id` değeri üst componente gönderilir. Silme işlemini yapan fonksiyon:
+
+```js
+function handleDeleteMovie(id) {
+  setMovies((movies) => movies.filter((i) => i.id !== id));
+}
+```
+
+Bu fonksiyonun mantığı şudur:
+
+- `filter()` metodu ile mevcut liste dolaşılır.
+- Silinmek istenen film hariç diğer filmler yeni listeye alınır.
+- `setMovies` ile state güncellenir.
+- State güncellendiği için arayüz otomatik olarak yeniden render edilir.
+
+Bu yaklaşımda orijinal array doğrudan değiştirilmez. React'te state güncellerken yeni bir array oluşturmak daha doğru bir yaklaşımdır.
+
+---
+
+## İzlenme Durumu Güncelleme
+
+Kullanıcı film kartındaki `İzledim` veya `İzlemedim` badge'ine tıkladığında filmin izlenme durumu değişir. Bu işlem şu fonksiyonla yapılır:
+
+```js
+function handleToggleWatched(id) {
+  setMovies((movies) =>
+    movies.map((movie) =>
+      movie.id === id ? { ...movie, isWatched: !movie.isWatched } : movie
+    )
+  );
+}
+```
+
+Bu fonksiyonda `map()` metodu kullanılır. Mantık şu şekildedir:
+
+- Liste içindeki her film kontrol edilir.
+- Eğer filmin `id` değeri tıklanan filmle eşleşiyorsa yeni bir object oluşturulur.
+- Bu object içinde eski film bilgileri korunur.
+- Sadece `isWatched` değeri tersine çevrilir.
+- Diğer filmler olduğu gibi bırakılır.
+
+Örnek:
+
+```js
+isWatched: true  → false
+isWatched: false → true
+```
+
+Bu işlem sonucunda badge yazısı ve rengi otomatik olarak değişir.
+
+---
+
+## Filtreleme Mantığı
+
+Filtreleme işlemi `filterButton` state'i üzerinden yapılır. Kullanıcı `Tümü`, `İzledim` veya `İzlemedim` butonlarından birine tıkladığında `filterButton` değeri değişir. Bu değer `MovieList` componentine props olarak gönderilir. Filtre değerlerine göre sonuçlar:
+
+| Filtre | Gösterilen Liste |
+| --- | --- |
+| `all` | Tüm filmler ve diziler |
+| `watched` | Sadece izlenenler |
+| `unwatched` | Sadece izlenmeyenler |
+
+Bu yapı sayesinde ana veri silinmeden sadece ekranda gösterilen liste değişir.
+
+---
+
+## Watchlist / Favoriler Mantığı
+
+Projede kullanıcı filmleri favori/watchlist listesine ekleyebilir. Ana listedeki kalp ikonuna tıklanınca ilgili film `watchListMovies` state'ine eklenir. Watchlist'e film ekleyen fonksiyon:
+
+```js
+function handleAddtoWatchList(movie) {
+  const isAlreadyAdded = watchListMovies.map((m) => m.id).includes(movie.id);
+
+  if (!isAlreadyAdded) {
+    setWatchListMovies((list) => [...list, movie]);
+  }
+}
+```
+
+Bu fonksiyonda önce filmin daha önce watchlist'e eklenip eklenmediği kontrol edilir. Eğer film zaten listede varsa tekrar eklenmez. Bu sayede favorilerde aynı filmden birden fazla kez oluşması engellenir. Watchlist'ten film çıkaran fonksiyon:
+
+```js
+function handleRemoveFromWatchList(id) {
+  setWatchListMovies((movies) => movies.filter((i) => i.id !== id));
+}
+```
+
+Bu fonksiyon da ana listeden silme mantığına benzer şekilde çalışır. İlgili `id` değerine sahip film watchlist listesinden çıkarılır. Header kısmında favori sayısı şu şekilde gösterilir:
+
+```js
+<span>{watchListMovies.length}</span>
+```
+
+Bu değer, watchlist'e eklenen film sayısını dinamik olarak gösterir.
 
 ---
 
 ## Koşullu Render Kullanımı
 
-Projede koşullu render iki farklı yerde kullanılmıştır.
+Projede koşullu render birçok yerde kullanılmıştır.
 
-### 1. Liste Boşsa Mesaj Gösterme
+### Liste Boşsa Mesaj Gösterme
 
-`MovieList` componentinde `movies` array'i kontrol edilir. Eğer liste boşsa kullanıcıya şu mesaj gösterilir:
+Eğer filtrelenmiş film listesi boşsa kullanıcıya bilgilendirme mesajı gösterilir:
 
-```text
-Henüz film eklenmedi.
+```js
+{filteredMovies.length == 0 ? (
+  <div>Henüz film eklenmedi.</div>
+) : (
+  filteredMovies.map((movie) => <MovieCard />)
+)}
 ```
 
-Liste boş değilse `map()` metodu ile her film/dizi için kart oluşturulur. 
+Bu sayede boş liste durumunda ekran tamamen boş kalmaz.
 
 ---
 
-### 2. İzlenme Durumuna Göre Yazı Gösterme
+### İzlenme Durumuna Göre Badge Gösterme
 
-`MovieCard` componentinde `isWatched` değeri kontrol edilir.
+`isWatched` değerine göre farklı yazı ve farklı CSS class'ı kullanılır.
+
+```js
+className={
+  movieObj.isWatched
+    ? "status-badge watched"
+    : "status-badge not-watched"
+}
+```
 
 - `true` ise `İzledim`
 - `false` ise `İzlemedim`
 
-şeklinde ekrana yazdırılır. Ayrıca bu değere göre farklı CSS class'ları kullanılarak görsel olarak farklı durum etiketleri oluşturulmuştur.
+şeklinde gösterilir.
 
 ---
 
-### 3. Puana Göre Yorum Oluşturma
+### Watchlist Açık/Kapalı Durumu
 
-`MovieCard` componentinde `rating` değerine göre özel yorum oluşturulur.
+Watchlist bölümü sadece `isWatchListOpen` değeri `true` olduğunda ekranda gösterilir.
+
+```js
+{isWatchListOpen && (
+  <WatchList
+    watchListMovies={watchListMovies}
+    onRemoveFromWatchList={handleRemoveFromWatchList}
+  />
+)}
+```
+
+Bu yapı, React'te sık kullanılan kısa koşullu render örneklerinden biridir.
+
+---
+
+### Ana Liste ve Watchlist İçin Farklı Buton Gösterme
+
+`MovieCard` componenti hem ana listede hem de watchlist içinde kullanılır. Bu nedenle `showActions` props'u ile hangi butonların gösterileceği belirlenir. Ana listede:
+
+- Sil butonu
+- Watchlist'e ekleme butonu
+
+Watchlist içinde:
+
+- Çıkar butonu
+
+Bu durum şu şekilde kontrol edilir:
+
+```js
+{showActions && <button>Sil</button>}
+{showActions && <button>Favoriye Ekle</button>}
+{!showActions && <button>Çıkar</button>}
+```
+
+Bu kullanım, tek bir componentin farklı ekranlarda farklı davranmasını sağlar.
+
+---
+
+### Puana Göre Yorum Oluşturma
+
+Her film için `rating` değerine göre otomatik yorum oluşturulur.
+
+```js
+let commentText = "";
+
+if (movieObj.rating >= 9.5)
+  commentText = "Favori adayım!";
+else if (movieObj.rating >= 9)
+  commentText = "Efsane yapım!";
+else if (movieObj.rating >= 7)
+  commentText = "Güzel görünüyor.";
+else
+  commentText = "Boş vaktin varsa izlenir";
+```
+
+Puan aralıklarına göre yorumlar:
 
 | Puan Aralığı | Gösterilen Yorum |
 | --- | --- |
 | 9.5 ve üzeri | Favori adayım! |
 | 9 ve üzeri | Efsane yapım! |
 | 7 ve üzeri | Güzel görünüyor. |
-| 7 altı | Boş vaktin varsa izlenir. |
-
-Bu yapı sayesinde her kart kendi puanına göre farklı bir yorum gösterebilir.
+| 7 altı | Boş vaktin varsa izlenir |
 
 ---
 
 ## FontAwesome Kullanımı
 
-Projede FontAwesome ikonları kullanılmıştır. İkonlar hem navbar bölümünde hem de film kartlarının detay alanlarında yer almaktadır. Kullanılan bazı ikonlar:
+Projede FontAwesome ikonları kullanılmıştır. İkonlar hem navbar alanında hem de film kartları içinde kullanılarak arayüz daha anlaşılır hale getirilmiştir. Kullanılan bazı ikonlar:
 
 | İkon | Kullanıldığı Yer |
 | --- | --- |
 | `faClapperboard` | Header içinde uygulama logosu yanında |
 | `faUser` | Header sağ tarafındaki kullanıcı ikonu |
-| `faTag` | Kart içinde tür satırı |
-| `faStar` | Kart içinde puan satırı |
-| `faCircleCheck` | Kart içinde izlenme durumu satırı |
-| `faCommentDots` | Kart içinde yorum satırı |
+| `faHeart` | Favorilere ekleme ve watchlist sayısı alanında |
+| `faTag` | Film/dizi kategori satırında |
+| `faStar` | Puan satırında |
+| `faCircleCheck` | İzlenme durumu satırında |
+| `faCommentDots` | Yorum satırında |
 
-FontAwesome sayesinde kart detayları daha okunabilir ve görsel olarak daha düzenli hale getirilmiştir.
+FontAwesome kullanımı sayesinde sadece metin tabanlı bir görünüm yerine daha görsel ve kullanıcı dostu bir arayüz elde edilmiştir.
 
 ---
 
 ## CSS ve Tasarım Mantığı
 
-Projede koyu tema tercih edilmiştir. Sayfa arka planı siyah, kart ve header alanları ise koyu gri tonlarında tasarlanmıştır. Tasarımda kullanılan temel yaklaşımlar:
+Projede koyu tema tercih edilmiştir. Genel tasarımda siyah arka plan, koyu gri kartlar ve kırmızı/turuncu vurgu renkleri kullanılmıştır. Tasarımda kullanılan temel yaklaşımlar:
 
 - Siyah arka plan
-- Koyu gri navbar
-- Koyu gri kart tasarımı
+- Koyu gri header ve kart yapısı
 - Yuvarlatılmış köşeler
-- Kartlarda grid düzeni
-- Film afişi ve detay bilgilerinin iki kolon halinde yerleşmesi
-- Kırmızı/turuncu vurgu rengi
+- Grid tabanlı kart yerleşimi
+- Film afişi ve detay bilgilerinin iki kolon halinde gösterilmesi
+- Aktif/pasif filtre butonu görünümü
 - Yeşil `İzledim` etiketi
 - Turuncu `İzlemedim` etiketi
+- Kırmızı silme butonu
+- Kırmızı çerçeveli favori butonu
+- Watchlist alanında ayrı grid düzeni
 
-MovieCard yapısı CSS grid ile iki ana kolona ayrılmıştır:
+MovieCard yapısı genel olarak şu mantıkla tasarlanmıştır:
 
 ```text
 MovieCard
@@ -296,64 +647,82 @@ MovieCard
 └── Sağ kolon: Başlık, tür, puan, durum ve yorum bilgileri
 ```
 
-Bu sayede kartlar hem düzenli hem de okunabilir bir yapıya sahip olmuştur.
+Ana film listesi iki kolonlu grid yapısıyla gösterilir:
+
+```css
+.movie-detail {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+```
+
+Watchlist alanında da benzer şekilde iki kolonlu yapı kullanılmıştır:
+
+```css
+.watchlist-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+```
+
+Bu yapı, kartların düzenli ve okunabilir görünmesini sağlar.
 
 ---
 
 ## Proje Nasıl Çalıştırılır?
 
-Projeyi çalıştırmak için aşağıdaki adımları takip edebilirsiniz.
+Projeyi bilgisayarda çalıştırmak için aşağıdaki adımlar izlenebilir.
 
-### 1. Projeyi bilgisayarınıza klonlayın
+### 1. Projeyi Klonlama
 
 ```bash
-git clone https://github.com/kullanici-adi/movie-list.git
+git clone <repo-linki>
 ```
 
-### 2. Proje klasörüne girin
+### 2. Proje Klasörüne Girme
 
 ```bash
 cd movie-list
 ```
 
-### 3. Gerekli paketleri yükleyin
+### 3. Bağımlılıkları Yükleme
 
 ```bash
 npm install
 ```
 
-### 4. Projeyi başlatın
+### 4. Geliştirme Sunucusunu Başlatma
 
 ```bash
 npm run dev
 ```
 
-### 5. Tarayıcıda açın
+Bu komuttan sonra terminalde verilen localhost bağlantısı tarayıcıda açılarak proje görüntülenebilir. Genellikle Vite projelerinde bağlantı şu şekilde olur:
 
-Terminalde verilen localhost adresini tarayıcıda açın.
+```text
+http://localhost:5173/
+```
 
----
+### 5. Production Build Alma
 
-## Geliştirilebilir Özellikler
+Projeyi yayınlamaya hazır hale getirmek için şu komut kullanılabilir:
 
-Bu proje temel React konularını öğrenmek amacıyla hazırlanmıştır. İlerleyen aşamalarda şu özellikler eklenebilir:
+```bash
+npm run build
+```
 
-- Film ve dizi filtreleme
-- Sadece izlenenleri gösterme
-- Sadece izlenmeyenleri gösterme
-- Arama çubuğu ekleme
-- Yeni film/dizi ekleme formu
-- Kart silme özelliği
-- Favorilere ekleme özelliği
-- LocalStorage ile listeyi kaydetme
-- Responsive mobil tasarım geliştirme
-- Detay sayfası oluşturma
-- Puan sıralama özelliği
+### 6. Build Sonucunu Önizleme
+
+```bash
+npm run preview
+```
 
 ---
 
-## Genel Değerlendirme
+## Genel Sonuç
 
-Mini Film / Dizi Listem projesi, React'in temel yapılarını öğrenmek için hazırlanmış sade ama öğretici bir uygulamadır. Projede component yapısı, props kullanımı, listeleme, koşullu render ve CSS ile modern kart tasarımı gibi konular birlikte uygulanmıştır.
+Bu proje, React'in temel yapılarını öğrenmek için oldukça faydalı bir örnektir. İlk aşamada film ve dizileri listeleyen basit bir yapı kurulmuş, daha sonra proje state yönetimi ile geliştirilmiştir.
 
-Bu proje sayesinde statik HTML/CSS mantığından React'in component tabanlı yapısına geçiş yapılmış ve verilerin dinamik olarak ekrana basılması öğrenilmiştir.
+Projede artık kullanıcı etkileşimi bulunan daha dinamik bir yapı vardır. Kullanıcı film ekleyebilir, silebilir, izlenme durumunu değiştirebilir, filtreleme yapabilir ve favori/watchlist listesi oluşturabilir. Bu işlemlerin tamamı React state mantığı ile yönetilmektedir.
+
+Bu nedenle proje; `useState`, props, event handling, array metotları, koşullu render ve componentler arası veri aktarımı gibi React konularını pratik etmek için güçlü bir örnek haline gelmiştir.

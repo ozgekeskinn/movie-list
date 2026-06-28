@@ -12,6 +12,7 @@
 .header-right {
   display: flex;
   align-items: center;
+  gap:10px;
 }
 
 .header-center {
@@ -101,6 +102,11 @@
     margin-bottom: 24px;
 }
 
+.movie-card-top-right{
+  display: flex;
+  gap: 10px;
+}
+
 .movie-card-top h2{
     margin: 0;
     font-size: 24px;
@@ -168,4 +174,129 @@
 
 .comment-text {
   line-height: 1.5;
+}
+
+/*Add movie*/
+.add-movie-form{
+  margin: 16px 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.add-movie-form input{
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #2c2c2c;
+  background-color: #181818;
+  color: white;
+  font-size: 14px;
+}
+
+.add-movie-form input::placeholder{
+  color: #666;
+}
+
+.add-movie-form button{
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  background-color: #ff4d3d;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.status-badge {
+    cursor: pointer;
+}
+
+/* filter buttons*/
+.filter-buttons{
+  margin: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.btn-passive{
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #2c2c2c;
+  background-color: #2c2c2c;
+  color: white;
+  cursor: pointer;
+}
+
+.btn-active {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background-color: wheat ;
+  color: #000000;
+  cursor: pointer;
+}
+
+.clear-all-btn{
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #2c2c2c;
+  background-color: #8B0000;
+  color: white;
+}
+
+/* watchlist */
+.watchlist{
+  margin: 10px;
+  padding: 20px;
+  background-color: #181818;
+  color: white;
+  border-radius: 8px;
+  border: 1px solid #2c2c2c;
+  border-bottom: 1px solid #2c2c2c;
+}
+
+.watchlist-item{
+  display: flex;
+  justify-content: space-between;
+  color: white;
+}
+
+.watchlist-remove-btn{
+  background-color: #8B0000;
+  color: white;
+  border-radius: 8px;
+  height: 35px;
+  border: none;
+  cursor: pointer;
+}
+
+.watchlist-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.watchlist-item {
+  color: white;
+}
+
+.watchlist-item .movie-card {
+  width: 100%;
+}
+
+.delete-btn {
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: none;
+  background-color: #8B0000;
+  color: white;
+  cursor: pointer;
+}
+
+.watchlist-add-btn {
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 1px solid #ff4d3d;
+  background-color: transparent;
+  color: #ff4d3d;
+  cursor: pointer;
 }

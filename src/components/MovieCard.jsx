@@ -7,7 +7,15 @@ import {
   faHeart,
 } from "@fortawesome/free-solid-svg-icons";
 
-export default function MovieCard({movieObj , onDeleteMovie, onToggleMovie,onAddtoWatchList,showActions,onRemoveFromWatchList}){
+export default function MovieCard({
+    movieObj , 
+    onDeleteMovie, 
+    onToggleMovie,
+    onAddtoWatchList,
+    showActions,
+    onRemoveFromWatchList
+}){
+    
     let commentText = "";
     if(movieObj.rating >= 9.5)
         commentText = "Favori adayım!";
@@ -21,7 +29,16 @@ export default function MovieCard({movieObj , onDeleteMovie, onToggleMovie,onAdd
     return (
         <div className="movie-card">
             <div className="movie-card-left">
-                <img src={movieObj.image} alt={movieObj.title} />
+                {movieObj.image ? (
+                    <img
+                    src={movieObj.image}
+                    alt={movieObj.title}
+                    />
+                ) : (
+                    <div className="movie-card-no-image">
+                    Görsel bulunamadı
+                    </div>
+                )}
             </div>
 
             <div className="movie-card-right">
@@ -32,13 +49,34 @@ export default function MovieCard({movieObj , onDeleteMovie, onToggleMovie,onAdd
                     <div className="movie-card-top-right">
                         <span className="type-badge">{movieObj.type}</span>
 
-                        {showActions && <button className="delete-btn" onClick={() => onDeleteMovie(movieObj.id)}>Sil</button>}
+                        {showActions && 
+                            <button 
+                                type="button"
+                                className="delete-btn" 
+                                onClick={() => onDeleteMovie?.(movieObj.id)}>Sil
+                            </button>
+                        }
 
-                        {showActions && <button className="watchlist-add-btn" onClick={() => onAddtoWatchList(movieObj)}>
-                            <FontAwesomeIcon icon={faHeart}/>
-                        </button>}
+                        {showActions && 
+                            <button
+                                type="button"
+                                className="favorite-btn"
+                                onClick={() =>
+                                    onAddtoWatchList?.(movieObj)
+                                }
+                                >
+                                <FontAwesomeIcon icon={faHeart} />
+                                <span>Favoriye Ekle</span>
+                            </button>
+                        }
 
-                        {!showActions && <button className="watchlist-remove-btn" onClick={() => onRemoveFromWatchList(movieObj.id)}>Çıkar</button>}
+                        {!showActions && 
+                            <button 
+                                type="button"
+                                className="watchlist-remove-btn" 
+                                onClick={() => onRemoveFromWatchList?.(movieObj.id)}>Çıkar
+                            </button>
+                        }
                     </div>                  
                 </div>
 
@@ -67,7 +105,7 @@ export default function MovieCard({movieObj , onDeleteMovie, onToggleMovie,onAdd
                             <span>Durum</span>
                         </div>
                         <span
-                            onClick={() => onToggleMovie(movieObj.id)}
+                            onClick={() => onToggleMovie?.(movieObj.id)}
                             className={
                             movieObj.isWatched
                                 ? "status-badge watched"

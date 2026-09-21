@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router";
 
-import './App.css';
+import "./App.css";
 
 import MainLayout from "./layouts/MainLayout";
 import Home from "./pages/Home";
@@ -10,58 +10,87 @@ import MovieDetails from "./pages/MovieDetails";
 import SearchResult from "./pages/SearchResult";
 import MyList from "./pages/MyList";
 import NotFound from "./pages/NotFound";
+import Series from "./pages/Series";
+import SeriesDetails from "./pages/SeriesDetails";
 
-import { getMovieDetails } from "./services/tmdbApi";
+import { getMovieDetails, getSeriesDetails } from "./services/tmdbApi";
 
 const TMDB_IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
+const MOVIE_SERIES_STORAGE_KEY = "movieSeriesList";
+const FAVORITES_STORAGE_KEY = "favoriteMovieSeriesList";
+
+function getStoredList(key) {
+  try {
+    const storedData = localStorage.getItem(key);
+
+    return storedData ? JSON.parse(storedData) : [];
+  } catch {
+    return [];
+  }
+}
 
 function App() {
-  const[movies,setMovies] = useState([]);
-  const[filterButton, setFilterButton] = useState("all");
-  const[watchListMovies, setWatchListMovies] = useState([]);
-  const[isWatchListOpen, setIsWatchListOpen] = useState(false);
-  
-  function handleDeleteMovie(id){
+  const [movies, setMovies] = useState(() =>
+    getStoredList(MOVIE_SERIES_STORAGE_KEY),
+  );
+
+  const [filterButton, setFilterButton] = useState("all");
+
+  const [watchListMovies, setWatchListMovies] = useState(() =>
+    getStoredList(FAVORITES_STORAGE_KEY),
+  );
+
+  const [isWatchListOpen, setIsWatchListOpen] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem(MOVIE_SERIES_STORAGE_KEY, JSON.stringify(movies));
+  }, [movies]);
+
+  useEffect(() => {
+    localStorage.setItem(
+      FAVORITES_STORAGE_KEY,
+      JSON.stringify(watchListMovies),
+    );
+  }, [watchListMovies]);
+
+  function handleDeleteMovie(id) {
     setMovies((movies) => movies.filter((i) => i.id !== id));
   }
 
-  function handleToggleWatched(id){
+  function handleToggleWatched(id) {
     setMovies((movies) =>
       movies.map((movie) =>
-        movie.id === id ? {...movie, isWatched: !movie.isWatched} : movie
-      )
+        movie.id === id ? { ...movie, isWatched: !movie.isWatched } : movie,
+      ),
     );
   }
 
-  function handleClearMovies(){
+  function handleClearMovies() {
     setMovies([]);
     setWatchListMovies([]);
   }
 
-  function handleAddtoWatchList(movie){
-    const isAlreadyAdded = watchListMovies
-    .map((m) => m.id)
-    .includes(movie.id);
+  function handleAddtoWatchList(movie) {
+    const isAlreadyAdded = watchListMovies.map((m) => m.id).includes(movie.id);
 
-    if(!isAlreadyAdded){
-      setWatchListMovies((list) => [...list,movie]);
+    if (!isAlreadyAdded) {
+      setWatchListMovies((list) => [...list, movie]);
     }
   }
 
-  function handleRemoveFromWatchList(id){
-    setWatchListMovies((movies) => 
-      movies.filter((i) => i.id !== id)
-  );
+  function handleRemoveFromWatchList(id) {
+    setWatchListMovies((movies) => movies.filter((i) => i.id !== id));
   }
 
   function handleToggleWatchList() {
     setIsWatchListOpen((prev) => !prev);
   }
 
-  async function handleAddApiMovieToList(apiMovie) {
+  async function handleAddApiMediaToList(apiMedia, mediaType = "movie") {
     const isAlreadyAdded = movies.some(
-      (movie) =>
-        Number(movie.tmdbId) === Number(apiMovie.id)
+      (item) =>
+        Number(item.tmdbId) === Number(apiMedia.id) &&
+        (item.mediaType || "movie") === mediaType,
     );
 
     if (isAlreadyAdded) {
@@ -69,63 +98,66 @@ function App() {
     }
 
     try {
-      const movieDetails = apiMovie.genres
-        ? apiMovie
-        : await getMovieDetails(apiMovie.id);
+      let mediaDetails;
 
-      const newMovie = {
-        id: `tmdb-${movieDetails.id}`,
-        tmdbId: movieDetails.id,
+      if (apiMedia.genres) {
+        mediaDetails = apiMedia;
+      } else if (mediaType === "tv") {
+        mediaDetails = await getSeriesDetails(apiMedia.id);
+      } else {
+        mediaDetails = await getMovieDetails(apiMedia.id);
+      }
 
-        title:
-          movieDetails.title ||
-          movieDetails.original_title,
+      const isSeries = mediaType === "tv";
 
-        type: "Film",
+      const newMedia = {
+        id: `${mediaType}-${mediaDetails.id}`,
+        tmdbId: mediaDetails.id,
+        mediaType,
+
+        title: isSeries
+          ? mediaDetails.name || mediaDetails.original_name
+          : mediaDetails.title || mediaDetails.original_title,
+
+        type: isSeries ? "Dizi" : "Film",
 
         category:
-          movieDetails.genres
-            ?.map((genre) => genre.name)
-            .join(" / ") || "Tür bilgisi yok",
+          mediaDetails.genres?.map((genre) => genre.name).join(" / ") ||
+          "Tür bilgisi yok",
 
-        rating: Number(
-          Number(movieDetails.vote_average || 0).toFixed(1)
-        ),
-
+        rating: Number(Number(mediaDetails.vote_average || 0).toFixed(1)),
         isWatched: false,
 
         comment:
-          movieDetails.overview ||
-          "Bu film için açıklama bulunamadı.",
+          mediaDetails.overview ||
+          `${isSeries ? "Bu dizi" : "Bu film"} için açıklama bulunamadı.`,
 
-        image: movieDetails.poster_path
-          ? `${TMDB_IMAGE_BASE_URL}${movieDetails.poster_path}`
+        image: mediaDetails.poster_path
+          ? `${TMDB_IMAGE_BASE_URL}${mediaDetails.poster_path}`
           : "",
       };
 
       setMovies((currentMovies) => {
         const alreadyExists = currentMovies.some(
-          (movie) =>
-            Number(movie.tmdbId) ===
-            Number(movieDetails.id)
+          (item) =>
+            Number(item.tmdbId) === Number(mediaDetails.id) &&
+            (item.mediaType || "movie") === mediaType,
         );
 
         if (alreadyExists) {
           return currentMovies;
         }
 
-        return [...currentMovies, newMovie];
+        return [...currentMovies, newMedia];
       });
 
       setFilterButton("all");
-
       return true;
     } catch (error) {
       console.error(
-        "Film kişisel listeye eklenemedi:",
-        error
+        `${mediaType === "tv" ? "Dizi" : "Film"} kişisel listeye eklenemedi:`,
+        error,
       );
-
       return false;
     }
   }
@@ -134,32 +166,52 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<MainLayout />}>
-          <Route 
-            index 
-            element={ 
+          <Route
+            index
+            element={
               <Home
                 myListMovies={movies}
-                onAddToMyList={handleAddApiMovieToList}
+                onAddToMyList={handleAddApiMediaToList}
               />
-            } 
+            }
           />
 
-          <Route 
-            path="movies" 
+          <Route
+            path="movies"
             element={
               <Movies
                 myListMovies={movies}
-                onAddToMyList={handleAddApiMovieToList}
+                onAddToMyList={handleAddApiMediaToList}
               />
-            } 
+            }
           />
 
-          <Route 
+          <Route
             path="movies/:id"
             element={
               <MovieDetails
                 myListMovies={movies}
-                onAddToMyList={handleAddApiMovieToList}
+                onAddToMyList={handleAddApiMediaToList}
+              />
+            }
+          />
+
+          <Route
+            path="series"
+            element={
+              <Series
+                myListMovies={movies}
+                onAddToMyList={handleAddApiMediaToList}
+              />
+            }
+          />
+
+          <Route
+            path="series/:id"
+            element={
+              <SeriesDetails
+                myListMovies={movies}
+                onAddToMyList={handleAddApiMediaToList}
               />
             }
           />
@@ -167,9 +219,9 @@ function App() {
           <Route
             path="search"
             element={
-              <SearchResult 
+              <SearchResult
                 myListMovies={movies}
-                onAddToMyList={handleAddApiMovieToList}
+                onAddToMyList={handleAddApiMediaToList}
               />
             }
           />
@@ -177,7 +229,7 @@ function App() {
           <Route
             path="my-list"
             element={
-              <MyList 
+              <MyList
                 movies={movies}
                 filterButton={filterButton}
                 setFilterButton={setFilterButton}

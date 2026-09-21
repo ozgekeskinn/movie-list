@@ -38,6 +38,15 @@
   font-weight: 600;
 }
 
+.brand-logo {
+  width: 175px;
+  height: 52px;
+
+  display: block;
+  object-fit: contain;
+  object-position: left center;
+}
+
 .menu-link {
   color: #d6d6d6;
   font-size: 15px;
@@ -55,89 +64,89 @@
 }
 
 /* MovieList */
-.movie-title{
-    display: flex;
-    align-items: center;
-    gap: 12px;
+.movie-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-.title{
-    margin: 20px;
-    color: white;
+.title {
+  margin: 20px;
+  color: white;
 }
 
-.title::before{
-    width: 4px;
-    height: 28px;
-    background-color: #ff4d3d;
+.title::before {
+  width: 4px;
+  height: 28px;
+  background-color: #ff4d3d;
 }
 
-.movie-detail{
-    margin: 20px;
-    padding: 20px;
-    display: grid;
-    grid-template-columns: repeat(2 , 1fr);
-    gap: 30px;
+.movie-detail {
+  margin: 20px;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
 }
 
 /* MovieCard */
-.movie-card{
-    display: grid;
-    align-items: center;
-    grid-template-columns: 190px 1fr;
-    gap: 24px;
+.movie-card {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 190px 1fr;
+  gap: 24px;
 
-    padding: 22px;
-    background-color: #181818;
-    border: 1px solid #2c2c2c;
-    border-radius: 14px;
+  padding: 22px;
+  background-color: #181818;
+  border: 1px solid #2c2c2c;
+  border-radius: 14px;
 
-    color: white;
-    min-height: 260px;
+  color: white;
+  min-height: 260px;
 }
 
-.movie-card-left{
-    width: 190px;
-    height: 230px;
+.movie-card-left {
+  width: 190px;
+  height: 230px;
 }
 
-.movie-card-left img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 14px;
+.movie-card-left img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 14px;
 }
 
-.movie-card-right{
-    display: flex;
-    flex-direction: column;
+.movie-card-right {
+  display: flex;
+  flex-direction: column;
 }
 
-.movie-card-top{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
+.movie-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
 }
 
-.movie-card-top-right{
+.movie-card-top-right {
   display: flex;
   gap: 10px;
 }
 
-.movie-card-top h2{
-    margin: 0;
-    font-size: 24px;
-    font-weight: 700;
+.movie-card-top h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
 }
 
-.type-badge{
-    padding: 6px 18px;
-    border: 1px solid #ff4d3d;
-    border-radius: 14px;
-    color: #ff4d3d;
-    font-size: 14px;
-    font-weight: 600;
+.type-badge {
+  padding: 6px 18px;
+  border: 1px solid #ff4d3d;
+  border-radius: 14px;
+  color: #ff4d3d;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .movie-card-details {
@@ -195,13 +204,13 @@
 }
 
 /*Add movie*/
-.add-movie-form{
+.add-movie-form {
   margin: 16px 20px;
   display: flex;
   gap: 10px;
 }
 
-.add-movie-form input{
+.add-movie-form input {
   padding: 10px 14px;
   border-radius: 8px;
   border: 1px solid #2c2c2c;
@@ -210,11 +219,11 @@
   font-size: 14px;
 }
 
-.add-movie-form input::placeholder{
+.add-movie-form input::placeholder {
   color: #666;
 }
 
-.add-movie-form button{
+.add-movie-form button {
   padding: 10px 20px;
   border-radius: 8px;
   border: none;
@@ -225,17 +234,17 @@
 }
 
 .status-badge {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 /* filter buttons*/
-.filter-buttons{
+.filter-buttons {
   margin: 20px;
   display: flex;
   gap: 10px;
 }
 
-.btn-passive{
+.btn-passive {
   padding: 10px;
   border-radius: 8px;
   border: 1px solid #2c2c2c;
@@ -248,21 +257,21 @@
   padding: 10px;
   border-radius: 8px;
   border: none;
-  background-color: wheat ;
+  background-color: wheat;
   color: #000000;
   cursor: pointer;
 }
 
-.clear-all-btn{
+.clear-all-btn {
   padding: 10px;
   border-radius: 8px;
   border: 1px solid #2c2c2c;
-  background-color: #8B0000;
+  background-color: #8b0000;
   color: white;
 }
 
 /* watchlist */
-.watchlist{
+.watchlist {
   margin: 10px;
   padding: 20px;
   background-color: #181818;
@@ -272,14 +281,14 @@
   border-bottom: 1px solid #2c2c2c;
 }
 
-.watchlist-item{
+.watchlist-item {
   display: flex;
   justify-content: space-between;
   color: white;
 }
 
-.watchlist-remove-btn{
-  background-color: #8B0000;
+.watchlist-remove-btn {
+  background-color: #8b0000;
   color: white;
   border-radius: 8px;
   height: 35px;
@@ -305,7 +314,7 @@
   padding: 6px 14px;
   border-radius: 8px;
   border: none;
-  background-color: #8B0000;
+  background-color: #8b0000;
   color: white;
   cursor: pointer;
 }
@@ -798,16 +807,8 @@ main {
   padding: 50px;
 
   background:
-    radial-gradient(
-      circle at right,
-      rgba(255, 77, 61, 0.2),
-      transparent 40%
-    ),
-    linear-gradient(
-      135deg,
-      #181818,
-      #101010
-    );
+    radial-gradient(circle at right, rgba(255, 77, 61, 0.2), transparent 40%),
+    linear-gradient(135deg, #181818, #101010);
 
   border: 1px solid #2c2c2c;
   border-radius: 20px;
@@ -874,15 +875,13 @@ main {
 
 .home-movie-grid {
   display: grid;
-  grid-template-columns:
-    repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 20px;
 }
 
 @media (max-width: 1100px) {
   .home-movie-grid {
-    grid-template-columns:
-      repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
@@ -897,8 +896,7 @@ main {
   }
 
   .home-movie-grid {
-    grid-template-columns:
-      repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -1062,12 +1060,11 @@ main {
   margin: 20px;
   overflow: hidden;
 
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255, 77, 61, 0.08),
-      rgba(24, 24, 24, 0.95)
-    );
+  background: linear-gradient(
+    135deg,
+    rgba(255, 77, 61, 0.08),
+    rgba(24, 24, 24, 0.95)
+  );
 
   border: 1px solid #2c2c2c;
   border-radius: 14px;
